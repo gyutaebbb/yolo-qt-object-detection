@@ -1,6 +1,8 @@
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "mainwindow.h"
+#include <QApplication>
 
 #include "parser.h"
 #include "utils.h"
@@ -150,7 +152,7 @@ void oneoff(char *cfgfile, char *weightfile, char *outfile)
     save_weights(net, outfile);
 }
 
-void partial(char *cfgfile, char *weightfile, char *outfile, int max)
+/*void partial(char *cfgfile, char *weightfile, char *outfile, int max)
 {
     gpu_index = -1;
     network net = parse_network_cfg(cfgfile);
@@ -160,7 +162,7 @@ void partial(char *cfgfile, char *weightfile, char *outfile, int max)
     *net.seen = 0;
     save_weights_upto(net, outfile, max);
 }
-
+*/
 #include "convolutional_layer.h"
 void rescale_net(char *cfgfile, char *weightfile, char *outfile)
 {
@@ -352,6 +354,23 @@ void visualize(char *cfgfile, char *weightfile)
 
 int main(int argc, char **argv)
 {
+    QApplication a(argc, argv);
+    MainWindow* w = new MainWindow();
+
+    w->setAttribute(Qt::WA_DeleteOnClose, true);
+    w->show();
+
+
+    argc = 7;
+    argv[0] = "./darknet";
+    argv[1] = "detector";
+    argv[2] = "demo";
+    argv[3] = "cfg/voc.data";
+    argv[4] = "cfg/tiny-yolo-voc.cfg";
+    argv[5] = "tiny-yolo-voc.weights";
+    argv[6] =  "test.mp4";
+
+
     //test_resize("data/bad.jpg");
     //test_box();
     //test_convolutional_layer();
@@ -437,7 +456,7 @@ int main(int argc, char **argv)
     } else if (0 == strcmp(argv[1], "oneoff")){
         oneoff(argv[2], argv[3], argv[4]);
     } else if (0 == strcmp(argv[1], "partial")){
-        partial(argv[2], argv[3], argv[4], atoi(argv[5]));
+        //partial(argv[2], argv[3], argv[4], atoi(argv[5]));
     } else if (0 == strcmp(argv[1], "average")){
         average(argc, argv);
     } else if (0 == strcmp(argv[1], "visualize")){
@@ -447,6 +466,8 @@ int main(int argc, char **argv)
     } else {
         fprintf(stderr, "Not an option: %s\n", argv[1]);
     }
-    return 0;
+
+    return a.exec();
 }
+
 

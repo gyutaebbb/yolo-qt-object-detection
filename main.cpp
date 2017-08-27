@@ -1,4 +1,4 @@
-#include <opencv2/core.hpp>
+/*#include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
 #include "opencv2/imgproc.hpp"
 #include <iostream>
@@ -9,7 +9,7 @@ using namespace std;
 int main(  )
 {
     Mat image;
-    image = imread("/home/prabindh/Downloads/InvitationMoT.jpg", CV_LOAD_IMAGE_COLOR);   
+    image = imread("test.mp4", CV_LOAD_IMAGE_COLOR);
 
     if(! image.data )                       
     {
@@ -23,3 +23,5 @@ int main(  )
     waitKey(0);                                      
     return 0;
 }
+
+*/
